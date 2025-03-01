@@ -1,11 +1,12 @@
 <?php
-    // function f($a, $b): int
-    // {
-    //   $c = $a + $b;
-    //   return $c;
-    // }
+    // ФУНКЦИИ
+    function f($a, $b): int
+    {
+      $c = $a + $b;
+      return $c;
+    }
 
-    // echo f(3,4);
+    echo f(3,4).'</br>';
 
     // ЗАДАНИЕ 1
     $arr1 = array('a', 'b', 'c', 'b', 'a');
@@ -39,3 +40,57 @@
     $arr5 = range(1, 100);
     echo 'задание 31: </br>';
     print_r($arr5);
+    echo '</br>';
+
+    // НАСЛЕДОВАНИЕ
+    class Lesson {
+      protected $title;
+      protected $text;
+
+      function __construct(string $title, string $text){
+        $this->title = $title;
+        $this->text = $text;
+      }
+
+      public function getText(){
+        return $this->text;
+      }
+    }
+
+    $lesson1 = new Lesson('lesson 1', 'la la la');
+
+    class Homework extends Lesson {
+      protected $task;
+
+      function __construct(string $title, string $text, $task){
+        parent::__construct($title, $text);
+        $this->task = $task;
+      }
+    }
+
+    $homework1 = new Homework('homework 1', 'bla bla bla', 'kek');
+
+    class Labwork extends Homework {
+      private $count;
+
+      function __construct(string $title, string $text, $task, $count){
+        parent::__construct($title, $text, $task);
+        $this->count = $count;
+      }
+    }
+
+    $laba1 = new Labwork('laba 1', 'he he he', 'lol', 5);
+    echo $laba1->getText();
+
+    // ИНТЕРФЕЙСЫ
+    class Rectangle{
+      private $a;
+      private $b;
+
+      public function __contruct($a, $b){
+        $this->a = $a;
+        $this->b = $b;
+      }
+      public function calculateSquare(): float
+      // ...
+    }
