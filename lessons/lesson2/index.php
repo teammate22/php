@@ -91,6 +91,4 @@
         $this->a = $a;
         $this->b = $b;
       }
-      public function calculateSquare(): float
-      // ...
     }
