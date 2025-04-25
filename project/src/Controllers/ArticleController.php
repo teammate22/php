@@ -34,45 +34,47 @@ class ArticleController {
         return $this->view->renderHtml('article/create');
     }
 
-    public function store(){
-        $article = new Article;
-        $article->name = $_POST['name'];
-        $article->text = $_POST['text'];
-        $article->authorId = 1;
+    public function store()
+    {
+        $article = new Article();
+        $article->setName($_POST['name']);
+        $article->setText($_POST['text']);
+        $article->setAuthorId((int) $_POST['author_id']);
         $article->save();
-        return header('Location:http://localhost/PHP_labs/php_laba_1/Project/www/');
+    
+        header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/');
+        exit;
     }
+    
 
-    public function show(int $id){
-        
+
+    public function show(int $id)
+    {
+        // Получаем статью
         $article = Article::getById($id);
-
-        // $reflector = new ReflectionObject($article);
-        // $properties = $reflector->getProperties();
-        // $propertiesName = [];
-        // foreach($properties as $property){
-        //     $propertiesName[]=$property->getName();
-        // }
-        // print_r($propertiesName);
-
-        if ($article == null){
+    
+        if ($article == null) {
             throw new NotFoundException();
-            // $this->view->renderHtml('main/error', [], 404);
-            // return;
         }
-
-        // задание 3.1 
-        // Получаем автора статьи
-        $author = $article->getAuthorId(); 
-
-        // Задание 6
+    
+        // Получаем ID автора статьи
+        $authorId = $article->getAuthorId();
+    
+        // Получаем объект пользователя (автора) по его ID
+        $author = User::getById($authorId);
+    
         // Получаем комментарии для статьи
         $comments = Comment::findByArticleId($id);
-
-        // задание 3.1 & 6
-        // Передаем автора и комментарии в шаблон
-        $this->view->renderHtml('article/show', ['article'=>$article, 'author' => $author, 'comments' => $comments]);
+    
+        // Передаем статью, автора и комментарии в шаблон
+        $this->view->renderHtml('article/show', [
+            'article' => $article,
+            'author' => $author,  // Передаем объект $author, а не только $authorId
+            'comments' => $comments
+        ]);
     }
+    
+
 
 
     public function edit(int $id){
@@ -88,11 +90,21 @@ class ArticleController {
         if ($article == null){
             throw new NotFoundException();
         }
+    
         $article->setName($_POST['name']);
         $article->setText($_POST['text']);
         $article->save();
-        return $this->view->renderHtml('article/show', ['article'=>$article]);
+    
+        $author = $article->getAuthor();
+        $comments = Comment::findByArticleId($article->getId());
+    
+        return $this->view->renderHtml('article/show', [
+            'article' => $article,
+            'author' => $author,
+            'comments' => $comments
+        ]);                
     }
+    
 
 
     public function delete(int $id){
@@ -101,7 +113,7 @@ class ArticleController {
             throw new NotFoundException();
         }
         $article->delete();
-        return header('Location:http://localhost/PHP_labs/php_laba_1/Project/www/');
+        return header('Location:http://localhost/php/project/www/index.php');
     }
 
     

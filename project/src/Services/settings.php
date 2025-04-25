@@ -2,7 +2,7 @@
 
     return [
         'host' => 'localhost',
-        'dbname' => 'project-3210',
+        'dbname' => 'project',
         'user' => 'root',
         'password' => ''
     ];

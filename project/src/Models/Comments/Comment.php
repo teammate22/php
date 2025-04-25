@@ -13,10 +13,17 @@ class Comment extends ActiveRecordEntity
     protected $text;
     protected $createdAt;
 
-    public function getAuthorId(): ?User 
+    public function getAuthorId(): int
     {
-        return User::getById($this->authorId); 
+        return $this->authorId;
     }
+    
+    public function getAuthor(): ?\src\Models\Users\User
+    {
+        return \src\Models\Users\User::getById($this->authorId);
+    }
+    
+    
 
     public function getArticleId(): int
     {
@@ -51,11 +58,23 @@ class Comment extends ActiveRecordEntity
         $this->createdAt = $createdAt;
     }
     
+    protected function getFields(): array
+    {
+        return [
+            'author_id' => $this->authorId,
+            'article_id' => $this->articleId,
+            'text' => $this->text,
+            'created_at' => $this->createdAt,
+        ];
+    }
+    
 
     protected static function getTableName(): string
     {
         return 'comments';
     }
+
+    
 
     public static function findByArticleId(int $articleId): array
     {

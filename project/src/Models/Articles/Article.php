@@ -24,12 +24,19 @@ class Article extends ActiveRecordEntity{
     //     return User::getById($this->authorId);
     // }
 
-    public function getAuthorId(): ?User // добавление опциональности
-    {
-        // return User::getById($this->authorId);
+    public function getAuthorId(): ?int{
         $user = User::getById($this->authorId);
-        return $user; // Может быть null, если пользователь не найден
+        return $user ? $user->getId() : null; // Возвращаем ID пользователя, если он найден
     }
+
+    public function getAuthor(): ?User
+    {
+        $user = User::getById($this->authorId);
+        return $user instanceof User ? $user : null;
+    }
+    
+    
+    
 
 
     public function setName(string $name){

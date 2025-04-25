@@ -38,4 +38,10 @@ use Exceptions\DbException;
             }
             return static::$instance;
         }
+        
+        public function getLastInsertId(): int
+        {
+            return $this->pdo->lastInsertId();
+        }
+        
     }

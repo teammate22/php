@@ -87,16 +87,22 @@ abstract class ActiveRecordEntity
         return strtolower(preg_replace('/([A-Z])/', '_$1', $source));
     }
 
-    private function mapPropertiesToDb(): array
-    {
+    private function mapPropertiesToDb(): array{
         $reflector = new ReflectionObject($this);
         $properties = $reflector->getProperties();
         $mappedProperties = [];
-        foreach($properties as $property){
+
+        foreach ($properties as $property) {
             $propertyName = $property->getName();
             $propertyDbName = $this->camelCaseToUnderscore($propertyName);
-            $mappedProperties[$propertyDbName]= $this->$propertyName;
+
+            // Проверяем, есть ли геттер для свойства
+            $methodName = 'get' . ucfirst($propertyName);
+            if (method_exists($this, $methodName)) {
+                $mappedProperties[$propertyDbName] = $this->$methodName(); // Используем геттер для получения значения
+            }
         }
+
         return $mappedProperties;
     }
 
@@ -156,6 +162,8 @@ abstract class ActiveRecordEntity
         $sql = 'INSERT INTO `'.static::getTableName().'`('.implode(',', $columns).') VALUES ('.implode(',', $params).')';
         $db = Db::getInstance();
         $db->query($sql, $param2Value, static::class);
+
+        $this->id = $db->getLastInsertId();
     }
 
     public function delete()

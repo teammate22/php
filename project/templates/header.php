@@ -26,10 +26,10 @@
 
         <!-- задание 2.1  -->
         <li class="nav-item">
-          <a class="nav-link" href="<?=dirname($_SERVER['SCRIPT_NAME']);?>/bye/ibragim">Bye</a>
+          <a class="nav-link" href="<?=dirname($_SERVER['SCRIPT_NAME']);?>/bye/tim">Bye</a>
         </li>
         <!-- <li class="nav-item">
-          <a class="nav-link" href="<// ?=dirname($_SERVER['SCRIPT_NAME']);?>/say/ibragim">Bye</a>
+          <a class="nav-link" href="<// ?=dirname($_SERVER['SCRIPT_NAME']);?>/say/tim">Bye</a>
         </li> -->
 
         <li class="nav-item">
