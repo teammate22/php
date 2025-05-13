@@ -6,7 +6,6 @@ use Exceptions\NotFoundException;
 use src\View\View;
 use src\Models\Comments\Comment;
 use src\Models\Users\User;
-// use src\Models\Articles\Article;
 use DateTime;
 
 class CommentController
@@ -18,7 +17,6 @@ class CommentController
         $this->view = new View(dirname(dirname(__DIR__)) . '/templates');
     }
 
-    // Метод для обработки POST-запроса на добавление комментария
     public function addComment(int $articleId)
     {
         // Проверяем, что запрос типа POST

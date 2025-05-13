@@ -1,29 +1,20 @@
 <?php
 
 namespace src\Controllers;
-
 use Exceptions\NotFoundException;
-// use ReflectionObject;
 use src\View\View;
-// use src\Services\Db;
 use src\Models\Articles\Article;
-
-// задание 3.1
-use src\Models\Users\User; // Добавляем use для User
-
-// Задание 6
+use src\Models\Users\User;
 use src\Models\Comments\Comment;
 
 
 class ArticleController {
     private $view;
-    // private $db;
     public function __construct()
     {
         $this->view = new View(dirname(dirname(__DIR__)).'/templates');
         // $this->db = new Db();
     }
-
 
     public function index(){
         $articles = Article::findAll();
@@ -46,8 +37,6 @@ class ArticleController {
         exit;
     }
     
-
-
     public function show(int $id)
     {
         // Получаем статью
@@ -73,9 +62,6 @@ class ArticleController {
             'comments' => $comments
         ]);
     }
-    
-
-
 
     public function edit(int $id){
         $article = Article::getById($id);
@@ -105,8 +91,6 @@ class ArticleController {
         ]);                
     }
     
-
-
     public function delete(int $id){
         $article = Article::getById($id);
         if ($article == null){
@@ -115,26 +99,4 @@ class ArticleController {
         $article->delete();
         return header('Location:http://localhost/php/project/www/index.php');
     }
-
-    
-    
-
-    // public function index(){
-    //     $sql = 'SELECT * FROM `articles`';
-    //     $article = $this->db->query($sql, [':id'=>$id], Article::class);
-        // var_dump($articles);
-    //     $this->view->renderHtml('main/main', ['articles'=>$articles]);
-    // }
-
-
-    // public function show(int $id){
-    //     $sql = "SELECT * FROM `articles` WHERE `id`=:id";
-    //     $article = $this->db->query($sql, [':id'=>$id]);
-
-    //     if ($article == null){
-    //         $this->view->renderHtml('main/error', [], 404);
-    //         return;
-    //     }
-    //     $this->view->renderHtml('article/show', ['article'=>$article[0]]);
-    // }
 }

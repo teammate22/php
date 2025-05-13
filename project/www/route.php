@@ -19,5 +19,5 @@
         
         "~^$~" => [src\Controllers\ArticleController::class, 'index'],
         "~^hello/(.*)$~" =>[src\Controllers\MainController::class, 'sayHello'],
-        "~^bye/(.*)$~" =>[src\Controllers\MainController::class, 'sayBye'], // задание 2.1 
+        "~^bye/(.*)$~" =>[src\Controllers\MainController::class, 'sayBye'],
     ];

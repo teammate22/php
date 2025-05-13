@@ -7,7 +7,6 @@
     //     require_once dirname(__DIR__).'\\'.$className.'.php';
     // });
 
-// возможная проблема в autoload_register
 
     // // временно, до решения проблемы (Error: Controller class not found: src\Controllers\ArticleController)
     // spl_autoload_register(function(string $className){
